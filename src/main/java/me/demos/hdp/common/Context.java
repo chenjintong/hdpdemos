@@ -9,6 +9,7 @@ public final class Context {
         CONF.addResource("core-site.xml");
         CONF.addResource("hdfs-site.xml");
         CONF.addResource("hbase-site.xml");
+        CONF.addResource("dfs-site.xml");
     }
 
     private Context() {

@@ -19,12 +19,13 @@ import me.demos.hdp.common.Context;
 
 public final class FirstKeyOnlyFilterDemo {
     private static final Log LOG = LogFactory.getLog(FirstKeyOnlyFilterDemo.class);
+    private static final int MILLI = 1000;
 
     private FirstKeyOnlyFilterDemo() {
         // Do nothing.
     }
 
-    protected static void exec(String tableName, String rowKeyPrefix) {
+    private static void exec(String tableName, String rowKeyPrefix) {
         ResultScanner scanner = null;
         try (Connection connection = ConnectionFactory.createConnection(Context.getConf()); Table table = connection.getTable(TableName.valueOf(tableName))) {
             Scan scan = new Scan();
@@ -43,7 +44,7 @@ public final class FirstKeyOnlyFilterDemo {
         }
     }
 
-    protected static void without(String tableName, String rowKeyPrefix) {
+    private static void without(String tableName, String rowKeyPrefix) {
         ResultScanner scanner = null;
         try (Connection connection = ConnectionFactory.createConnection(Context.getConf()); Table table = connection.getTable(TableName.valueOf(tableName))) {
             Scan scan = new Scan();
@@ -67,13 +68,13 @@ public final class FirstKeyOnlyFilterDemo {
         long time0 = System.currentTimeMillis();
         exec(args[0], prefix);
         long time1 = System.currentTimeMillis();
-        long duration1 = (time1 - time0) / 1000;
+        long duration1 = (time1 - time0) / MILLI;
         LOG.info("Operation with FKO filter cost [" + duration1 + "s].");
 
         long time2 = System.currentTimeMillis();
         without(args[0], prefix);
         long time3 = System.currentTimeMillis();
-        long duration2 = (time3 - time2) / 1000;
+        long duration2 = (time3 - time2) / MILLI;
         LOG.info("Operation without FKO filter cost [" + duration2 + "s].");
 
         LOG.info("Duration distance is [" + (duration2 - duration1) + "s].");

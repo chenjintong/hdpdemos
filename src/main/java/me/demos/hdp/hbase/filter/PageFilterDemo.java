@@ -25,7 +25,7 @@ public final class PageFilterDemo {
         // Do nothing.
     }
 
-    protected static void exec(String tableName, String familyName, String qualifierName, String qualfierValue, long pageSize, String resultQualifierName) {
+    private static void exec(String tableName, String familyName, String qualifierName, String qualfierValue, long pageSize, String resultQualifierName) {
         LOG.info("Enter EXEC method, table name is [" + tableName + "], family name is [" + familyName + "].");
         LOG.info("Qualifier name is [" + qualifierName + "], value is [" + qualfierValue + "].");
         ResultScanner scanner = null;
