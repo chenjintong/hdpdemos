@@ -1,17 +1,18 @@
 package me.demos.hdp.hbase.filter;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hbase.CellUtil;
-import org.apache.hadoop.hbase.CompareOperator;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 import org.apache.hadoop.hbase.filter.PageFilter;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 
@@ -31,11 +32,15 @@ public final class PageFilterDemo {
         try (Connection connection = ConnectionFactory.createConnection(Context.getConf()); Table table = connection.getTable(TableName.valueOf(tableName))) {
             byte[] familyBytes = familyName.getBytes();
             Scan scan = new Scan();
-            scan.setFilter(new SingleColumnValueFilter(familyBytes, qualifierName.getBytes(), CompareOperator.EQUAL, qualfierValue.getBytes()));
+            SingleColumnValueFilter scvFilter = new SingleColumnValueFilter(familyBytes, qualifierName.getBytes(), CompareOp.EQUAL, qualfierValue.getBytes());
+            scvFilter.setFilterIfMissing(true); // NEED
+            scan.setFilter(scvFilter);
             scan.setFilter(new PageFilter(pageSize));
             scanner = table.getScanner(scan);
-            scanner.spliterator().forEachRemaining(result -> LOG.info("Got a result, [" + resultQualifierName + "] is ["
-                    + new String(CellUtil.cloneValue(result.getColumnLatestCell(familyBytes, resultQualifierName.getBytes()))) + "]."));
+            AtomicInteger size = new AtomicInteger(0);
+            scanner.spliterator().forEachRemaining(result -> LOG.info("Have got [" + size.incrementAndGet() + "] result(s), value of [" + resultQualifierName
+                    + "] is [" + new String(CellUtil.cloneValue(result.getColumnLatestCell(familyBytes, resultQualifierName.getBytes()))) + "]."));
+            LOG.info("Results' number is [" + size.get() + "].");
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
         } finally {
