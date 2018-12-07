@@ -5,4 +5,104 @@
   <version>1.0.0</version>
   <name>HDP Demos</name>
   <description>Demos on HDP.</description>
+  
+  <properties>
+  	<default.encoding>UTF-8</default.encoding>
+  	<java.version>1.8</java.version>
+  	<hbase.version>2.1.1</hbase.version>
+  	<curator.version>4.0.1</curator.version>
+  	<commons.logging.version>1.2</commons.logging.version>
+  	<commons.compress.version>1.18</commons.compress.version>
+  	<snappy.java.version>1.1.7.2</snappy.java.version>
+  	<avro.version>1.8.2</avro.version>
+  	<xz.version>1.8</xz.version>
+  </properties>
+  
+  <dependencies>
+  	<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+	<dependency>
+    	<groupId>commons-logging</groupId>
+    	<artifactId>commons-logging</artifactId>
+    	<version>${commons.logging.version}</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
+	<dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-compress</artifactId>
+    	<version>${commons.compress.version}</version>
+	</dependency>
+	
+	<!-- HBase Dependencies -->
+	<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-common -->
+	<dependency>
+    	<groupId>org.apache.hbase</groupId>
+    	<artifactId>hbase-common</artifactId>
+    	<version>${hbase.version}</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-client -->
+	<dependency>
+    	<groupId>org.apache.hbase</groupId>
+    	<artifactId>hbase-client</artifactId>
+    	<version>${hbase.version}</version>
+	</dependency>
+	
+	<!-- Curator Dependencies -->
+	<!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
+	<dependency>
+    	<groupId>org.apache.curator</groupId>
+    	<artifactId>curator-framework</artifactId>
+    	<version>${curator.version}</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.curator/curator-recipes -->
+	<dependency>
+    	<groupId>org.apache.curator</groupId>
+    	<artifactId>curator-recipes</artifactId>
+    	<version>${curator.version}</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.curator/curator-client -->
+	<dependency>
+    	<groupId>org.apache.curator</groupId>
+    	<artifactId>curator-client</artifactId>
+    	<version>${curator.version}</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.xerial.snappy/snappy-java -->
+	<dependency>
+    	<groupId>org.xerial.snappy</groupId>
+    	<artifactId>snappy-java</artifactId>
+    	<version>${snappy.java.version}</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.apache.avro/avro -->
+	<dependency>
+    	<groupId>org.apache.avro</groupId>
+    	<artifactId>avro</artifactId>
+    	<version>${avro.version}</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.tukaani/xz -->
+	<dependency>
+    	<groupId>org.tukaani</groupId>
+    	<artifactId>xz</artifactId>
+    	<version>${xz.version}</version>
+	</dependency>
+  </dependencies>
+  
+  <build>
+  	<pluginManagement>
+  		<plugins>
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-compiler-plugin</artifactId>
+  				<version>3.7.0</version>
+  				<configuration>
+  					<source>${java.version}</source>
+  					<target>${java.version}</target>
+  					<encoding>${default.encoding}</encoding>
+  				</configuration>
+  			</plugin>
+  		</plugins>
+  	</pluginManagement>
+  </build>
 </project>
